@@ -1,0 +1,18 @@
+Configuration
+=============
+
+plotter.conf
+  Definitions of different plotters to be used.
+
+parser.conf
+  Definitions of parsers for elements to be indexes.
+
+index.conf
+  Definitions of indexes which will be used to save data.
+
+input.conf
+  Definitions of inputs to be indexes (usually files here).
+
+element.conf
+  Link plotters, parsers, indexes and inputs in one element.
+

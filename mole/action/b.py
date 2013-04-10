@@ -1,0 +1,5 @@
+class Example(object):
+    """hola"""
+
+
+

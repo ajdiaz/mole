@@ -1,0 +1,106 @@
+#! /usr/bin/env python
+# -*- encoding: utf-8 -*-
+# vim:fenc=utf-8:
+
+"""The scripts module provide and endpoint for console scripts.
+"""
+
+import argparse
+import sys, os, io
+
+from mole import AttrDict
+from mole.config import MoleConfig
+from mole.input import Input
+from mole.plotter import Plotter
+from mole.parser import Parser
+from mole.action import Action
+from mole.planner import Planner
+from mole.index import Index
+
+DEFAULT_CONFIG = "/etc/mole/mole.conf"
+DEFAULT_DIRCFG = "/etc/mole/"
+
+def cli():
+    """Main console script function.
+    """
+    cmdopt = argparse.ArgumentParser(
+                description="Mole: smartest operational tool.",
+                epilog="(c) 2012 Andrés J. Díaz <ajdiaz@connectical.com>"
+             )
+    cmdopt.add_argument("-f","--format", action="store", dest="format",help="set parser config file.",type=str,default=[])
+
+    cmdopt.add_argument("expression",help="log files")
+    cmdopt.add_argument("logfile",nargs="+",help="log files")
+    args = cmdopt.parse_args()
+
+    config = MoleConfig()
+
+    try:
+        config.read(os.getenv("MOLE_CONFIG", None) or DEFAULT_CONFIG)
+    except:
+        print >> sys.stderr, "unable to read config file %s." % sys.argv[1]
+        return 1
+
+    config.format = MoleConfig()
+    config.format.read(args.format)
+
+    if config.format.plotter:
+        plotter = Plotter.from_type(**config.format.plotter)
+    else:
+        plotter = Plotter.from_type("basic")
+
+
+    if config.format.parser:
+        parser = Parser.from_type(**config.format.parser)
+    else:
+        parser = Parser.from_type("basic")
+
+    input   = []
+    for x in args.logfile:
+        input.append( Input.from_type("file", x) )
+
+    planner = Planner.parse(args.expression)
+    planner.add(parser)
+    planner.add(plotter)
+    planner.add(input[0])
+
+    for x in planner():
+        print x
+
+
+def main():
+    try:
+        cli()
+    except Exception, e:
+        print >> sys.stderr, "[error] %s" % e
+
+def indexer():
+    """Create an indexer daemon"""
+
+    cmdopt = argparse.ArgumentParser(
+                description="Mole: smartest operational tool.",
+                epilog="(c) 2012 Andrés J. Díaz <ajdiaz@connectical.com>"
+             )
+    cmdopt.add_argument("-C","--config", action="store",
+            dest="config",help="set indexer config directory.",type=str,default=None)
+
+    args = cmdopt.parse_args()
+
+    if not args.config:
+        args.config = os.getenv("MOLE_CONFIGDIR", None) or DEFAULT_DIRCFG
+
+    config = AttrDict()
+
+    config.input  = MoleConfig(os.path.join(args.config,"input.conf"))
+    config.index  = MoleConfig(os.path.join(args.config,"index.conf"))
+    config.parser = MoleConfig(os.path.join(args.config,"parser.conf"))
+    config.plotter = MoleConfig(os.path.join(args.config,"plotter.conf"))
+
+    config.input   = dict(Input.from_config(config.input))
+    config.index   = dict(Index.from_config(config.index))
+    config.parser  = dict(Parser.from_config(config.parser))
+    config.plotter = dict(Plotter.from_config(config.plotter))
+
+    print config
+
+

@@ -1,0 +1,35 @@
+<p class="logo">
+<a href="/">
+	<img class="logo" src="{{ theme_logo_path }}" title="{{ theme_logo_title }}" />
+</a>
+<p><iframe
+	src="http://ghbtns.com/github-btn.html?user={{ theme_repo_author }}&amp;repo={{ theme_repo_name }}&amp;type=watch&amp;count=true&amp;size=large" 
+	allowtransparency="true" frameborder="0" scrolling="0" width="200px"
+	height="35px"></iframe>
+</p>
+<p class="desc">
+{{ theme_description }}
+</p>
+<!--<h3>Share</h3>
+{% if theme_author_twitter %}
+<a href="https://twitter.com/share" class="twitter-share-button" data-via="{{theme_author_twitter}}" data-hashtags="{{theme_repo_name}}">Tweet</a>
+<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="https://platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
+<br/>
+{% endif %}
+<iframe src="http://www.facebook.com/plugins/like.php?href=http%3A%2F%2Fmico.readthedocs.org&amp;send=false&amp;layout=button_count&amp;width=450&amp;show_faces=true&amp;font=verdana&amp;colorscheme=light&amp;action=like&amp;height=21" scrolling="no" frameborder="0" style="border:none; overflow:hidden; width:450px; height:21px;" allowTransparency="true"></iframe>
+-->
+<h3>Feedback</h3>
+<p>Feedback is greatly appreciated. If you have any questions, comments, random
+praise, or anonymous threats, <a href="mailto:{{ theme_repo_email }}">shoot
+	me an email.</a></p>
+<h3>Useful Links</h3>
+<ul>
+	{% if theme_package_url %}
+	<li><a href="{{theme_package_url}}">{{theme_repo_name}} @ PyPI</a></li>
+	{% endif %}
+	{% if theme_repo_url %}
+	<li><a href="{{theme_repo_url}}">{{theme_repo_name}} @ github.com</a></li>
+	<li><a href="{{theme_repo_url}}/issues">Issue tracker</a></li>
+	{% endif %}
+</ul>
+
