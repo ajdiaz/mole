@@ -53,6 +53,7 @@ setup(
     install_requires = parse_requirements('requirements.txt'),
     dependency_links = parse_dependency_links('requirements.txt'),
     packages=find_packages(),
+    license="GPLv2",
     entry_points={
         'console_scripts': [
             'mole = mole.script.client:main',
