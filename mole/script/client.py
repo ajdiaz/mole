@@ -42,7 +42,7 @@ class ScriptClient(object):
 
         try:
             for x in self.client.run(config.search):
-                print x
+                print(x)
         except KeyboardInterrupt:
             self.client.cancel()
 

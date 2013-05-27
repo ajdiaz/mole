@@ -33,7 +33,6 @@ class PlotterBasic(Plotter):
         if self.char == os.linesep:
             # Native iterator is faster
             for x in stream:
-                print x.__class__
                 yield x.rstrip(self.char)
         else:
             # TODO: implement in C with binding or port to python3 to use

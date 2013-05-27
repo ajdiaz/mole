@@ -6,7 +6,10 @@ import os
 import time
 import socket
 import threading
-import SocketServer
+try:
+    import SocketServer
+except ImportError:
+    import socketserver as SocketServer
 
 from setproctitle import setproctitle
 

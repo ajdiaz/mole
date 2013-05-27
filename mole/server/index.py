@@ -58,7 +58,7 @@ class ServerIndex(Server):
 
         try:
             self.plan(False)
-        except EventError, e:
+        except EventError as e:
             self.log.error("%-15s: event error: %s" % (name, str(e)))
 
     def __call__(self, config):

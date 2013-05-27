@@ -30,14 +30,14 @@ def parse_dependency_links(file_name):
 
 
 def get_file_contents(filename):
-    fd = file(path.join(path.dirname(__file__), filename), "r")
+    fd = open(path.join(path.dirname(__file__), filename), "r")
     content = fd.read()
     fd.close()
     return content
 
 
 def get_file_contents(filename):
-    fd = file(path.join(path.dirname(__file__), filename), "r")
+    fd = open(path.join(path.dirname(__file__), filename), "r")
     content = fd.read()
     fd.close()
     return content
